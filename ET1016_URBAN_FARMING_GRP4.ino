@@ -12,6 +12,11 @@ Description: monitoring and control of temp and humidity (measuring the temp. an
 #include "PCA9685.h" 
 #define CLK 10//CLK of the TM1637 IC connect to D10 of OPEN-SMART UNO R3
 #define DIO 11//DIO of the TM1637 IC connect to D11 of OPEN-SMART UNO R3
+#define LED_GREEN   5
+#define LED_BLUE    6
+#define LED_YELLOW  7
+#define BUTTONK1 8
+#define BUTTONK2 9
 TM1637 disp(CLK,DIO);
 PCA9685 pwmController(Wire);
 PCA9685_ServoEval pwmServo1;
@@ -20,8 +25,9 @@ PCA9685_ServoEval pwmServo1;
 DHT dht;
 unsigned long startTime;
 
-
-
+// Prototype
+void handleButtonPress(void);
+void displayChoices(void);
 
 void setup() {
   disp.init();  
@@ -35,6 +41,20 @@ void setup() {
   pwmController.setChannelPWM(0, pwmServo1.pwmForAngle(-10));
   pwmController.setChannelPWM(1, pwmServo1.pwmForAngle(0));
   delay(1000);
+// LEDs
+  pinMode(LED_GREEN, OUTPUT);
+  pinMode(LED_BLUE, OUTPUT);
+  pinMode(LED_YELLOW, OUTPUT);
+  
+  //Buttons
+  pinMode(BUTTONK1, INPUT_PULLUP);
+  pinMode(BUTTONK2, INPUT_PULLUP);
+
+  // Initialize
+  Serial.begin(9600);
+  disp.init();  
+	dht.begin();
+  displayChoices();
 
 }
 
@@ -90,7 +110,7 @@ void loop() {
   else {
     while (true);
   }
-
+  handleButtonPress();
 }
 
 
@@ -129,4 +149,38 @@ void displayError()
   disp.display(3,14);//display "E"
 }
 
+// === Displaying Choices ===
+void displayChoices(void)
+{
+Serial.println("Select Option");
+Serial.println("1. Zone 1 (YELLOW LED)");
+Serial.println("Default - No Buttons are pressed");
+Serial.println("2. Zone 2 (BLUE LED)");
+Serial.println("BUTTONK2 is pressed and hold to move forward from pin 7 to 6");
+Serial.println("3. Zone3 (GREEN LED");
+Serial.println("BUTTONK2 is pressed and hold again to move forward from pin 6 to 5");
+delay(1000);
+return;
+}
+
+// === Button handling ===
+void handleButtonPress(void) 
+{
+
+  if (digitalRead(BUTTONK2) == 0)   //Reads the buttonk2
+  {
+    for (int i=5; i<= 7; i++) 
+      digitalWrite(i, LOW);
+
+   digitalWrite(mode, HIGH);  //Display the led according to the pin number
+
+   mode--;      //Displaying the buttonk2 starting from yellow led
+   if (mode < 5)
+    mode = 7;
+
+   while (digitalRead(BUTTONK2) == 0);
+  }
+
+  return;
+}
 
