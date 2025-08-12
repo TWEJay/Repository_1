@@ -19,7 +19,6 @@ TM1637 disp(CLK,DIO);
 PCA9685 pwmController(Wire);
 PCA9685_ServoEval pwmServo1;
 
-DHT dht;
 
 // Prototype
 void handleButtonPress(void);
@@ -56,6 +55,7 @@ void setup() {
 
 // Variables 
 int mode = 7;
+DHT dht;  // For temperature & humidity sensor
 
 void start() {
   displayChoices()
@@ -100,7 +100,7 @@ void handleButtonPress(void) {
 }
 
 // === Displaying Temperature & Humidity 
-void temp_main() {
+void temp_main(void) {
 for (int i = 0; i < 20; i++) {
   float h = dht.readHumidity();
   float t = dht.readTemperature();
