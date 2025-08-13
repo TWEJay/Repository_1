@@ -72,7 +72,6 @@ Serial.println("2. Zone 2 (BLUE LED)");
 Serial.println("BUTTONK2 is pressed and hold to move forward from pin 7 to 6");
 Serial.println("3. Zone3 (GREEN LED");
 Serial.println("BUTTONK2 is pressed and hold again to move forward from pin 6 to 5");
-delay(1000);
 return;
 }
 
@@ -91,7 +90,7 @@ void handleButtonPress(void) {
     temp_main();
 
    while (digitalRead(BUTTONK2) == 0);
-   delay(1500);
+   delay(100);
   }
   return;
 }
@@ -106,12 +105,12 @@ for (int j = 0; j < 20; j++) {
       } 
   else{
     displayTemperature((int8_t)t);
-    delay(3000);
+    delay(1500);
     displayHumidity((int8_t)h);
     Serial.print(t);
     Serial.print(",");
     Serial.println(h);
-    delay(3000);
+    delay(1500);
     return;
   }
 }
