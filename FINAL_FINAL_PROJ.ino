@@ -39,7 +39,6 @@ void setup() {
   pwmController.setPWMFreqServo();
   pwmController.setChannelPWM(0, pwmServo1.pwmForAngle(-10));
   pwmController.setChannelPWM(1, pwmServo1.pwmForAngle(0));
-  delay(1000);
   // LEDs
   pinMode(LED_GREEN, OUTPUT);
   pinMode(LED_BLUE, OUTPUT);
@@ -72,7 +71,6 @@ Serial.println("2. Zone 2 (BLUE LED)");
 Serial.println("BUTTONK2 is pressed and hold to move forward from pin 7 to 6");
 Serial.println("3. Zone3 (GREEN LED");
 Serial.println("BUTTONK2 is pressed and hold again to move forward from pin 6 to 5");
-delay(1000);
 return;
 }
 
@@ -91,7 +89,7 @@ void handleButtonPress(void) {
     temp_main();
 
    while (digitalRead(BUTTONK2) == 0);
-   delay(1500);
+   delay(100);
   }
   return;
 }
