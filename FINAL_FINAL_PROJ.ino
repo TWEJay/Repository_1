@@ -98,7 +98,7 @@ void handleButtonPress(void) {
 
 // === Displaying Temperature & Humidity 
 void temp_main(void) {
-for (int i = 0; i < 20; i++) {
+for (int j = 0; j < 20; j++) {
   float h = dht.readHumidity();
   float t = dht.readTemperature();
     if (isnan(t) || isnan(h)) {
