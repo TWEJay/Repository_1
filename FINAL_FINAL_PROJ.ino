@@ -19,6 +19,9 @@ TM1637 disp(CLK,DIO);
 PCA9685 pwmController(Wire);
 PCA9685_ServoEval pwmServo1;
 
+// Variables 
+int mode = 7, i;
+DHT dht;  // For temperature & humidity sensor
 
 // Prototype
 void handleButtonPress(void);
@@ -48,14 +51,8 @@ void setup() {
   // Temperature & Humidity Sensor
   disp.init();  
 	dht.begin();
-  
-  // Initialize
   Serial.begin(9600);
 }
-
-// Variables 
-int mode = 7;
-DHT dht;  // For temperature & humidity sensor
 
 void start() {
   displayChoices()
@@ -126,6 +123,7 @@ void displayError() {//for temperature & humidity sensor
 // === Temperature 
 void displayTemperature(int8_t temperature) {
   int8_t temp[4];
+	int8_t originalTemp = temperature;
   if(temperature < 0)
 	{
 		temp[0] = INDEX_NEGATIVE_SIGN;
@@ -139,7 +137,7 @@ void displayTemperature(int8_t temperature) {
 	temp[3] = 12;	          //index of 'C' for celsius degree symbol.
 	disp.display(temp);
 
-  if(temperature > 25)
+  if(originalTemp > 25)
     controlMotor();
   return;
 }
@@ -162,7 +160,7 @@ void displayHumidity(int8_t humi) {
 
 // === Servos 
 void controlMotor(void) {
-for (int = 0; i < 20; i++) {
+for (int j = 0; j < 20; j++) {
   for (i = 0; i <= 150; i += 5) { 
         pwmController.setChannelPWM(1, pwmServo1.pwmForAngle(i));
         delay(100);
