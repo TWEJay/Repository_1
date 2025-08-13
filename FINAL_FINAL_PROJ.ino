@@ -104,12 +104,12 @@ for (int j = 0; j < 20; j++) {
       } 
   else{
     displayTemperature((int8_t)t);
-    delay(3000);
+    delay(1500);
     displayHumidity((int8_t)h);
     Serial.print(t);
     Serial.print(",");
     Serial.println(h);
-    delay(3000);
+    delay(1500);
     return;
   }
 }
