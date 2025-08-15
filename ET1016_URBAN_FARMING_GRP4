@@ -109,6 +109,7 @@ void handleButtonPress(int ledPins[], int size)
   return;
 }
 
+// === Temperature ===
 void displayTemperature(int8_t temperature)
 {
   int8_t temp[4];
@@ -129,7 +130,8 @@ void displayTemperature(int8_t temperature)
      controlMotor();
   return;
   }
-  
+
+// === Humidity ===
 void displayHumidity(int8_t humi)
 {
   int8_t temp[4];
@@ -145,12 +147,14 @@ void displayHumidity(int8_t humi)
   return;
 }
 
+// === Display Errors ===
 void displayError(void)
 {
   disp.display(3,14); //display "E"
   return;
 }
 
+// === Servos ===
 void controlMotor (void)
 {for(int j = 0; j <3; j++){
       for (i = 0; i <= 150; i += 5) { 
